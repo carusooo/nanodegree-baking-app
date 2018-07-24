@@ -8,12 +8,13 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 @Dao
-public interface RecipeDao {
+public interface BaseRecipeDao {
 
-    @Query("select * from baserecipe where id=:recipeId")
-    LiveData<Recipe> getRecipeById(int recipeId);
+    @Insert
+    void insertAll(BaseRecipe... recipes);
+
 
     @Query("select * from baserecipe")
-    LiveData<List<Recipe>> getAllRecipes();
+    LiveData<List<BaseRecipe>> getAllRecipes();
 
 }

@@ -6,10 +6,10 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 
-@Entity(foreignKeys = @ForeignKey(entity = Recipe.class,
+@Entity(foreignKeys = @ForeignKey(entity = BaseRecipe.class,
         parentColumns = "id", childColumns = "recipeId"))
 public class Step {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     int stepId;
     int recipeId;
     String shortDescription;

@@ -9,16 +9,27 @@ public class RecipeDatabaseProvider {
 
     public static RecipeDatabase getDatabase(Context context) {
 
-        if(mDb == null){
+        if (mDb == null) {
             mDb = Room.inMemoryDatabaseBuilder(context.getApplicationContext(), RecipeDatabase.class)
                     .build();
             Thread t = new Thread(() -> {
-                Recipe[] recipeList = RecipeJson.fetchRecipes();
-                mDb.getRecipeDao().insertAll(recipeList);
+                BaseRecipe[] recipes = RecipeJson.fetchRecipes();
+                mDb.getBaseRecipeDao().insertAll(recipes);
+                for (BaseRecipe recipe :
+                        recipes) {
+                    for (Ingredient ingredient :
+                            recipe.ingredients) {
+                        ingredient.recipeId = recipe.getId();
+                    }
+                    for (Step step : recipe.steps) {
+                        step.recipeId = recipe.getId();
+                    }
+                    mDb.getIngredientDao().insertAll(recipe.getIngredients());
+                    mDb.getStepDao().insertAll(recipe.getSteps());
+                }
             });
             t.start();
         }
-
         return mDb;
     }
 }

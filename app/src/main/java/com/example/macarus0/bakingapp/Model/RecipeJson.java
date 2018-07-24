@@ -13,7 +13,7 @@ import java.net.URL;
 
 public class RecipeJson {
 
-    static public Recipe[] fetchRecipes() {
+    static public BaseRecipe[] fetchRecipes() {
         String recipeJsonString;
         try {
             String BAKING_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
@@ -23,8 +23,8 @@ public class RecipeJson {
             return null;
         }
         Gson gson = new Gson();
-        Recipe[] recipeLists = gson.fromJson(recipeJsonString, Recipe[].class);
-        Log.e("fetchRecipes", String.format("Retrieved %s recipes", recipeLists.length));
+        BaseRecipe[] recipeLists = gson.fromJson(recipeJsonString, BaseRecipe[].class);
+        Log.i("fetchRecipes", String.format("Retrieved %s recipes", recipeLists.length));
         return recipeLists;
     }
 

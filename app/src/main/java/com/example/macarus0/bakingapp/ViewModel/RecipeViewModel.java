@@ -23,6 +23,10 @@ public class RecipeViewModel extends AndroidViewModel {
         return mDb.getRecipeDao().getAllRecipes();
     }
 
+    public LiveData<Recipe> getRecipeById(int id) {
+        return mDb.getRecipeDao().getRecipeById(id);
+    }
+
 
 }
 

@@ -1,46 +1,30 @@
 package com.example.macarus0.bakingapp.Model;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Relation;
 
-@Entity
+import java.util.List;
+
+@Dao
 public class Recipe {
-    @PrimaryKey
-    int id;
-    String name;
-    @Ignore
-    Ingredient[] ingredients;
-    @Ignore
-    Step[] steps;
-    int servings;
-    String image;
 
-    public Ingredient[] getIngredients() {
-        return ingredients;
-    }
+    @Embedded
+    BaseRecipe baseRecipe;
 
-    public Step[] getSteps() {
-        return steps;
-    }
-    @Ignore
-    public int getServings() {
-        return servings;
-    }
-    @Ignore
-    public String getImage() {
-        return image;
-    }
-    @Ignore
-    public int getId() {
-        return id;
-    }
-    @Ignore
+    @Relation(parentColumn = "id",
+            entityColumn = "recipeId")
+    public List<Ingredient> ingredients;
+    @Relation(parentColumn = "id",
+            entityColumn = "recipeId")
+    public List<Step> steps;
+
+
     public String getName() {
-        return name;
+        return baseRecipe.getName();
     }
 
-
+    public int getId() {
+        return baseRecipe.getId();
+    }
 }
-
-
