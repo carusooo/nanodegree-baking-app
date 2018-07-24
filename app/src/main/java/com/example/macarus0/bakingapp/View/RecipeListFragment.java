@@ -17,26 +17,30 @@ import com.example.macarus0.bakingapp.ViewModel.RecipeViewModel;
 
 public class RecipeListFragment extends Fragment {
 
-    private RecipeViewModel recipeViewModel;
     private RecipeAdapter mRecipeAdapter;
-    private GridLayoutManager mGridLayoutManager;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
+        RecipeViewModel recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
         final View rootView = inflater.inflate(R.layout.recipe_list_fragment, container, false);
 
         RecyclerView recyclerView = rootView.findViewById(R.id.recycler_view);
 
-        mGridLayoutManager = new GridLayoutManager(getContext(), 1);
+        GridLayoutManager mGridLayoutManager = new GridLayoutManager(getContext(), 1);
 
         mRecipeAdapter = new RecipeAdapter();
-        recipeViewModel.getRecipeList().observe(this, recipes -> mRecipeAdapter.setRecipes(recipes));
+        recipeViewModel.getAllRecipes().observe(this, recipes -> mRecipeAdapter.setRecipes(recipes));
         recyclerView.setLayoutManager(mGridLayoutManager);
         recyclerView.setAdapter(mRecipeAdapter);
 
         return rootView;
     }
+
+//        private void displayRecipes(List<Recipe> recipes) {
+//
+//        }
+
+
 }

@@ -13,11 +13,10 @@ import java.net.URL;
 
 public class RecipeJson {
 
-    private static String BAKING_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
-
     static public Recipe[] fetchRecipes() {
         String recipeJsonString;
         try {
+            String BAKING_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
             recipeJsonString = fetchRecipeJson(BAKING_URL);
         } catch (IOException e) {
             Log.e("fetchRecipes", "Error fetching URL");
