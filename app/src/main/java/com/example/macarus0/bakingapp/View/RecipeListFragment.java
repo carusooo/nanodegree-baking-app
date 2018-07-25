@@ -7,28 +7,23 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.macarus0.bakingapp.Model.Recipe;
 import com.example.macarus0.bakingapp.R;
 import com.example.macarus0.bakingapp.ViewModel.RecipeViewModel;
-
-import java.util.List;
 
 
 public class RecipeListFragment extends Fragment {
 
     private RecipeAdapter mRecipeAdapter;
-    private RecipeViewModel mRecipeViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
+        RecipeViewModel mRecipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
         final View rootView = inflater.inflate(R.layout.recipe_list_fragment, container, false);
 
         RecyclerView recyclerView = rootView.findViewById(R.id.recycler_view);
@@ -37,6 +32,12 @@ public class RecipeListFragment extends Fragment {
 
         mRecipeAdapter = new RecipeAdapter();
         mRecipeViewModel.getAllRecipes().observe(this, recipes -> mRecipeAdapter.setRecipes(recipes));
+        try {
+            mRecipeAdapter.setRecipeClickHandler((RecipeAdapter.RecipeClickHandler) getContext());
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getContext().toString()
+                    + " must implement RecipeClickHandler");
+        }
         recyclerView.setLayoutManager(mGridLayoutManager);
         recyclerView.setAdapter(mRecipeAdapter);
         return rootView;

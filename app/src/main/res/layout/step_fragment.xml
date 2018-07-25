@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/step_video"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        tools:text="someUrl"
+        android:layout_weight=".40"/>
+
+    <TextView
+        android:id="@+id/step_text"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        tools:text="Some step text"
+        android:layout_weight=".45"/>
+
+    <TextView
+        android:id="@+id/next_step"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".15"/>
+
+</android.support.v7.widget.LinearLayoutCompat>

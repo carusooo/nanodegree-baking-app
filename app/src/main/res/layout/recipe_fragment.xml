@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.LinearLayoutCompat
-            android:id="@+id/recipe_list_fragment"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <android.support.v7.widget.CardView
+            <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/recipe_list_fragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/recipe_ingredients"
-                    style="@style/Card"
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/recipe_ingredients"
+                        style="@style/Card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        tools:text="Baked Spaghett" />
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recipe_steps"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    tools:text="Baked Spaghett" />
+                    android:numColumns="1"></android.support.v7.widget.RecyclerView>
 
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recipe_steps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:numColumns="1"></android.support.v7.widget.RecyclerView>
-
-        </android.support.v7.widget.LinearLayoutCompat>
-    </FrameLayout>
-</ScrollView>
+            </android.support.v7.widget.LinearLayoutCompat>
+        </FrameLayout>
+    </ScrollView>
+</FrameLayout>

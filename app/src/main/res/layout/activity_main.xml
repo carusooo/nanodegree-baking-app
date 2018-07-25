@@ -3,7 +3,10 @@
     android:layout_height="match_parent"
     android:id="@+id/recipe_list_fragment"
     android:name="com.example.macarus0.bakingapp.View.RecipeListFragment"
-    xmlns:android="http://schemas.android.com/apk/res/android"></fragment>
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+</fragment>
 
 
 

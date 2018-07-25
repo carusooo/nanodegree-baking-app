@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.macarus0.bakingapp.Model.Recipe;
 import com.example.macarus0.bakingapp.R;
@@ -17,14 +16,24 @@ import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
 
-    String TAG = "RecipeAdapter";
+    private final String TAG = "RecipeAdapter";
 
-    List<Recipe> recipes;
+    private List<Recipe> recipes;
+
+    public void setRecipeClickHandler(RecipeClickHandler recipeClickHandler) {
+        this.recipeClickHandler = recipeClickHandler;
+    }
+
+    private RecipeClickHandler recipeClickHandler;
 
     public void setRecipes(List<Recipe> recipes){
         this.recipes = recipes;
         Log.i(TAG, "setRecipes: " + recipes.size());
         notifyDataSetChanged();
+    }
+
+    public interface RecipeClickHandler {
+        void onRecipeClick(int id);
     }
 
 
@@ -67,7 +76,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(v.getContext(), "Clicked "+ recipeId +"!", Toast.LENGTH_SHORT).show();
+            recipeClickHandler.onRecipeClick(recipeId);
         }
     }
 }

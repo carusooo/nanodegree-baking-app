@@ -9,16 +9,22 @@ import java.util.List;
 @Dao
 public class Recipe {
 
-    @Embedded
-    BaseRecipe baseRecipe;
-
     @Relation(parentColumn = "id",
             entityColumn = "recipeId")
     public List<Ingredient> ingredients;
     @Relation(parentColumn = "id",
             entityColumn = "recipeId")
     public List<Step> steps;
+    @Embedded
+    BaseRecipe baseRecipe;
 
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public List<Step> getSteps() {
+        return steps;
+    }
 
     public String getName() {
         return baseRecipe.getName();
