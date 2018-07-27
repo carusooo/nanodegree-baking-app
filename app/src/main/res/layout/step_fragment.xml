@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <TextView
@@ -20,10 +20,28 @@
         tools:text="Some step text"
         android:layout_weight=".45"/>
 
-    <TextView
-        android:id="@+id/next_step"
+<android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/step_navigation"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".15"/>
+        android:layout_weight=".20"
+        android:orientation="horizontal">
+    <Button
+        android:id="@+id/previous_step"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".4"
+        android:drawableTop="@drawable/ic_sharp_navigate_before_24px"
+        android:text="@string/previous_step"/>
+    <Button
+        android:id="@+id/next_step"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".4"
+        android:drawableTop="@drawable/ic_sharp_navigate_next_24px"
+        android:text="@string/next_step"
+        />
+    </android.support.v7.widget.LinearLayoutCompat>
+
 
 </android.support.v7.widget.LinearLayoutCompat>

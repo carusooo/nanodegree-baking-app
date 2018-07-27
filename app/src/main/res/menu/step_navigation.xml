@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/previous_step"
+        android:title="@string/previous_step"
+        android:icon="@drawable/ic_sharp_navigate_before_24px" />
+    <item android:id="@+id/next_step"
+        android:title="@string/next_step"
+        android:icon="@drawable/ic_sharp_navigate_next_24px" />
+</menu>

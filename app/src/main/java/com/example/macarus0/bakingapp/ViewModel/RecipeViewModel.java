@@ -15,7 +15,7 @@ public class RecipeViewModel extends AndroidViewModel {
 
     private final RecipeDatabase mDb;
 
-    public RecipeViewModel(Application application){
+    public RecipeViewModel(Application application) {
         super(application);
         mDb = RecipeDatabaseProvider.getDatabase(application.getApplicationContext());
     }
@@ -28,7 +28,18 @@ public class RecipeViewModel extends AndroidViewModel {
         return mDb.getRecipeDao().getRecipeById(id);
     }
 
-    public LiveData<Step> getStepById(int id) { return mDb.getStepDao().getStepById(id);}
+    public LiveData<Step> getStepById(int id) {
+        return mDb.getStepDao().getStepById(id);
+    }
+
+
+    public LiveData<Step> getNextStep(Step step) {
+        return mDb.getStepDao().getStepByPosition(step.getRecipeId(), step.getStepNumber() + 1);
+    }
+
+    public LiveData<Step> getPreviousStep(Step step) {
+        return mDb.getStepDao().getStepByPosition(step.getRecipeId(), step.getStepNumber() - 1);
+    }
 
 
 }

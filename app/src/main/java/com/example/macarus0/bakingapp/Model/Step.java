@@ -1,5 +1,6 @@
 package com.example.macarus0.bakingapp.Model;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
@@ -11,6 +12,8 @@ import android.arch.persistence.room.PrimaryKey;
 public class Step {
     @PrimaryKey(autoGenerate = true)
     int stepId;
+    @ColumnInfo(name = "stepNumber")
+    int id;
     int recipeId;
     String shortDescription;
     String description;
@@ -40,5 +43,8 @@ public class Step {
     public String getThumbnailUrl() {
         return thumbnailUrl;
     }
-
+    @Ignore
+    public int getStepNumber() {
+        return id;
+    }
 }
