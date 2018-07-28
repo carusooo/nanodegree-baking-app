@@ -17,7 +17,7 @@ public class Step {
     int recipeId;
     String shortDescription;
     String description;
-    String videoUrl;
+    String videoURL;
     String thumbnailUrl;
     @Ignore
     public int getRecipeId() {
@@ -37,7 +37,7 @@ public class Step {
     }
     @Ignore
     public String getVideoUrl() {
-        return videoUrl;
+        return videoURL;
     }
     @Ignore
     public String getThumbnailUrl() {

@@ -6,19 +6,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/step_video"
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/player_view"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
-        tools:text="someUrl"
-        android:layout_weight=".40"/>
+        android:layout_height="0dp"
+        android:layout_weight=".40"
+        />
 
     <TextView
         android:id="@+id/step_text"
         android:layout_width="match_parent"
         android:layout_height="80sp"
         tools:text="Some step text"
-        android:layout_weight=".45"/>
+        android:layout_weight=".40"/>
 
 <android.support.v7.widget.LinearLayoutCompat
         android:id="@+id/step_navigation"
