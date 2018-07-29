@@ -12,6 +12,11 @@ import android.arch.persistence.room.PrimaryKey;
 public class Step {
     @PrimaryKey(autoGenerate = true)
     int stepId;
+
+    public void setStepNumber(int stepNumber) {
+        this.id = stepNumber;
+    }
+
     @ColumnInfo(name = "stepNumber")
     int id;
     int recipeId;
