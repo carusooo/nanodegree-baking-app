@@ -34,10 +34,10 @@ public class StepActivity extends AppCompatActivity implements StepFragment.Step
     }
 
     @Override
-    public void navigateToStep(int id) {
+    public void navigateToStep(int stepId) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         StepFragment navigationStep = new StepFragment();
-        navigationStep.setStepId(id);
+        navigationStep.setStepId(stepId);
         fragmentManager.beginTransaction().replace(R.id.step_container, navigationStep).commit();
         mStepFragment = navigationStep;
     }

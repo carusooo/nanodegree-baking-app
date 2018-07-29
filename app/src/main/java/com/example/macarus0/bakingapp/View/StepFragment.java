@@ -130,7 +130,7 @@ public class StepFragment extends Fragment {
     }
 
     public interface StepNavigationHandler {
-        void navigateToStep(int id);
+        void navigateToStep(int stepId);
     }
 
     private void releasePlayer() {
@@ -165,6 +165,7 @@ public class StepFragment extends Fragment {
         if (Util.SDK_INT > 23) {
             releasePlayer();
         }
+        
     }
 
     @Override

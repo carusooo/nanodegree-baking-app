@@ -41,6 +41,8 @@ public class RecipeViewModel extends AndroidViewModel {
         return mDb.getStepDao().getStepByPosition(step.getRecipeId(), step.getStepNumber() - 1);
     }
 
-
+    public LiveData<Step> getFirstStep(int recipeId) {
+        return mDb.getStepDao().getStepByPosition(recipeId, 1);
+    }
 }
 
