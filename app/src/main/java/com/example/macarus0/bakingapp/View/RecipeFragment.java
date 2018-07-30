@@ -50,8 +50,16 @@ public class RecipeFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.recipe_fragment, container, false);
         ButterKnife.bind(this, rootView);
 
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
-
+        /*
+         *  Create the layout manager for the reviews and attach to the recyclerView
+         *  Scrolling is disabled here since the content is wrapped by a ScrollView
+         */
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
         mStepRecyclerView.setLayoutManager(mLinearLayoutManager);
         mStepAdapter = new StepAdapter();
         try {
@@ -60,6 +68,7 @@ public class RecipeFragment extends Fragment {
             throw new ClassCastException(getContext().toString()
                     + " must implement StepClickHandler");
         }
+        mStepRecyclerView.setHasFixedSize(true);
         mStepRecyclerView.setAdapter(mStepAdapter);
 
 
