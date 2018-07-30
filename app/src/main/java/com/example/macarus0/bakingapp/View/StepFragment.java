@@ -1,13 +1,10 @@
 package com.example.macarus0.bakingapp.View;
 
-import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +24,6 @@ import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
@@ -118,12 +114,9 @@ public class StepFragment extends Fragment {
         if (step == null) {
             button.setEnabled(false);
         } else {
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    StepNavigationHandler activity = (StepNavigationHandler) getActivity();
-                    activity.navigateToStep(step.getStepId());
-                }
+            button.setOnClickListener(v -> {
+                StepNavigationHandler activity = (StepNavigationHandler) getActivity();
+                activity.navigateToStep(step.getStepId());
             });
         }
 
