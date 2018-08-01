@@ -18,28 +18,23 @@ import com.example.macarus0.bakingapp.View.RecipeActivity;
  * Implementation of App Widget functionality.
  */
 public class IngredientsWidget extends AppWidgetProvider {
+    private int recipeId;
+    private String recipeName;
 
-    public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                       int recipeId, String recipeName, int appWidgetId) {
-
-        // Construct the RemoteViews object
-        RemoteViews views = getIngredientsRemoteViews(context, recipeId, recipeName);
-
-        // Instruct the widget manager to update the widget
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.ingredients_widget_list);
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-
-    }
-
-    public static void updateIngredientsWidgets(Context context, AppWidgetManager appWidgetManager,
-                                                int recipeId, String recipeName, int[] appWidgetIds) {
-        // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, recipeId, recipeName, appWidgetId);
+    public void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                       int appWidgetId) {
+        if(recipeName != null) {
+            // Construct the RemoteViews object
+            RemoteViews views = getIngredientsRemoteViews(context, recipeId, recipeName);
+            // Instruct the widget manager to update the widget
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.ingredients_widget_list);
+            appWidgetManager.updateAppWidget(appWidgetId, views);
+        } else {
+            Log.e("updateAppWidget", "No recipe specified!");
         }
     }
 
-    private static RemoteViews getIngredientsRemoteViews(Context context, int recipeId, String recipeName) {
+    private RemoteViews getIngredientsRemoteViews(Context context, int recipeId, String recipeName) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
         views.setTextViewText(R.id.ingredients_widget_recipe_name, recipeName);
         Intent ingredientsAdapter = new Intent(context, IngredientsWidgetService.class);
@@ -54,9 +49,16 @@ public class IngredientsWidget extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
-            //updateAppWidget(context, appWidgetManager, appWidgetId);
+            updateAppWidget(context, appWidgetManager, appWidgetId);
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        recipeId = intent.getIntExtra(IngredientsWidgetService.RECIPE_ID, 0);
+        recipeName = intent.getStringExtra(IngredientsWidgetService.RECIPE_NAME);
+        super.onReceive(context, intent);
     }
 
     @Override

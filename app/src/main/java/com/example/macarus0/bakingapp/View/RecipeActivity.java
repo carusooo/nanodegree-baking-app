@@ -98,8 +98,19 @@ public class RecipeActivity extends AppCompatActivity implements StepAdapter.Ste
         }    }
 
         private void updateIngredientsWidget(Recipe recipe) {
+
+            Intent updateWidgetIntent = new Intent(this, IngredientsWidget.class);
+            updateWidgetIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            updateWidgetIntent.putExtra(IngredientsWidgetService.RECIPE_NAME, recipe.getName());
+            updateWidgetIntent.putExtra(IngredientsWidgetService.RECIPE_ID, recipe.getId());
+
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
             int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, IngredientsWidget.class));
-            IngredientsWidget.updateIngredientsWidgets(this, appWidgetManager, recipe.getId(), recipe.getName(), appWidgetIds);
+            if(appWidgetIds != null && appWidgetIds.length > 0) {
+                updateWidgetIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+                this.sendBroadcast(updateWidgetIntent);
+            }
+
+
         }
 }

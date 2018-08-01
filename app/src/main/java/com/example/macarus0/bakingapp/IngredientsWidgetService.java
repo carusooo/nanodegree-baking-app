@@ -14,6 +14,7 @@ import com.example.macarus0.bakingapp.Model.RecipeDatabaseProvider;
 public class IngredientsWidgetService extends RemoteViewsService {
 
     public static final String RECIPE_ID = "com.example.macarus0.bakingapp.widget.recipe_id";
+    public static final String RECIPE_NAME = "com.example.macarus0.bakingapp.widget.recipe_name";
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
