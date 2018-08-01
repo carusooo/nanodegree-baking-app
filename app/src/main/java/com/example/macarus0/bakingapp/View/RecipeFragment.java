@@ -1,6 +1,7 @@
 package com.example.macarus0.bakingapp.View;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,6 +39,7 @@ public class RecipeFragment extends Fragment {
     @BindView(R.id.recipe_ingredients)
     public TextView mIngredientsTextView;
     private StepAdapter mStepAdapter;
+    private OnFragmentSetupListener onFragmentSetupListener;
 
     public RecipeFragment() {
 
@@ -78,24 +80,39 @@ public class RecipeFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            onFragmentSetupListener = ((OnFragmentSetupListener) getActivity());
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement OnFragmentSetupListener");
+        }
+    }
+
     public void setRecipeId(int recipeId) {
         mRecipeId = recipeId;
     }
 
     private void displayRecipe(Recipe recipe) {
 
-            StringBuilder ingredients = new StringBuilder();
-            for (Ingredient ingredient :
-                    recipe.getIngredients()
-                    ) {
-                ingredients.append("• ").
-                        append(ingredient.getQuantity()).append(" ").
-                        append(ingredient.getMeasure()).append(" ").
-                        append(ingredient.getIngredient()).append("\n");
-            }
-            mIngredientsTextView.setText(ingredients.toString());
-
+        StringBuilder ingredients = new StringBuilder();
+        for (Ingredient ingredient :
+                recipe.getIngredients()
+                ) {
+            ingredients.append("• ").
+                    append(ingredient.getQuantity()).append(" ").
+                    append(ingredient.getMeasure()).append(" ").
+                    append(ingredient.getIngredient()).append("\n");
+        }
+        mIngredientsTextView.setText(ingredients.toString());
         mStepAdapter.setSteps(recipe.getSteps());
+        onFragmentSetupListener.setTitle(recipe.getName());
     }
 
+    public interface OnFragmentSetupListener {
+        void setTitle(String title);
+    }
 }

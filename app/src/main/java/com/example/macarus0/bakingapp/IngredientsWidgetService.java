@@ -11,9 +11,9 @@ import com.example.macarus0.bakingapp.Model.Recipe;
 import com.example.macarus0.bakingapp.Model.RecipeDatabase;
 import com.example.macarus0.bakingapp.Model.RecipeDatabaseProvider;
 
-public class IngredientsWidgetService extends RemoteViewsService{
+public class IngredientsWidgetService extends RemoteViewsService {
 
-    public static final String RECIPE_ID = "recipe_id";
+    public static final String RECIPE_ID = "com.example.macarus0.bakingapp.widget.recipe_id";
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -42,13 +42,13 @@ class IngredientsRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
     @Override
     public void onCreate() {
         mDb = RecipeDatabaseProvider.getDatabase(mContext.getApplicationContext());
-
     }
 
     @Override
     public void onDataSetChanged() {
         // Get the recipe Dao here
         mRecipe = mDb.getRecipeDao().getStaticRecipeById(mRecipeId);
+        Log.e("OnDataSetChanged", "Got Recipe "+mRecipe.getName());
     }
 
     @Override
@@ -86,6 +86,6 @@ class IngredientsRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
     @Override
     public boolean hasStableIds() {
-        return true;
+        return false;
     }
 }
