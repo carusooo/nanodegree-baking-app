@@ -17,32 +17,31 @@ import android.widget.TextView;
 import com.example.macarus0.bakingapp.Model.Ingredient;
 import com.example.macarus0.bakingapp.Model.Recipe;
 import com.example.macarus0.bakingapp.R;
+import com.example.macarus0.bakingapp.Util.BakingIdlingResource;
 import com.example.macarus0.bakingapp.ViewModel.RecipeViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecipeFragment extends Fragment {
+
     private static final String RECIPE_ID = "recipe_id";
+    @BindView(R.id.recipe_steps)
+    public RecyclerView mStepRecyclerView;
+    @BindView(R.id.recipe_ingredients)
+    public TextView mIngredientsTextView;
+    private BakingIdlingResource mBakingIdlingResource;
     private int mRecipeId;
+    private StepAdapter mStepAdapter;
+    private OnFragmentSetupListener onFragmentSetupListener;
+    public RecipeFragment() {
 
-
+    }
 
     private void restoreState(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             mRecipeId = savedInstanceState.getInt(RECIPE_ID);
         }
-    }
-
-    @BindView(R.id.recipe_steps)
-    public RecyclerView mStepRecyclerView;
-    @BindView(R.id.recipe_ingredients)
-    public TextView mIngredientsTextView;
-    private StepAdapter mStepAdapter;
-    private OnFragmentSetupListener onFragmentSetupListener;
-
-    public RecipeFragment() {
-
     }
 
     @Nullable
@@ -76,7 +75,11 @@ public class RecipeFragment extends Fragment {
 
         RecipeViewModel recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
         Log.i("onCreateView", "Looking for recipe ID " + mRecipeId);
+        mBakingIdlingResource = BakingIdlingResource.getIdlingResource();
+
+        mBakingIdlingResource.startWork();
         recipeViewModel.getRecipeById(mRecipeId).observe(this, this::displayRecipe);
+
         return rootView;
     }
 
@@ -97,7 +100,7 @@ public class RecipeFragment extends Fragment {
     }
 
     private void displayRecipe(Recipe recipe) {
-
+        mStepAdapter.setSteps(recipe.getSteps());
         StringBuilder ingredients = new StringBuilder();
         for (Ingredient ingredient :
                 recipe.getIngredients()
@@ -108,8 +111,8 @@ public class RecipeFragment extends Fragment {
                     append(ingredient.getIngredient()).append("\n");
         }
         mIngredientsTextView.setText(ingredients.toString());
-        mStepAdapter.setSteps(recipe.getSteps());
         onFragmentSetupListener.setTitle(recipe.getName());
+        mBakingIdlingResource.completeWork();
     }
 
     public interface OnFragmentSetupListener {

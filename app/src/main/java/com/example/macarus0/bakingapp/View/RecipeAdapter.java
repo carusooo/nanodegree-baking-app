@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.macarus0.bakingapp.Model.Recipe;
 import com.example.macarus0.bakingapp.R;
+import com.example.macarus0.bakingapp.Util.BakingIdlingResource;
 
 import java.util.List;
 
@@ -49,8 +50,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         Recipe recipe = this.recipes.get(position);
         holder.recipeNameTextView.setText(recipe.getName());
         holder.recipeId = recipe.getId();
+        holder.recipeNameTextView.setContentDescription(recipe.getName());
         Log.i(TAG, "onBindViewHolder: "+ recipe.getName());
     }
+
+
 
     @Override
     public int getItemCount() {
