@@ -52,6 +52,9 @@ public class StepFragment extends Fragment {
     private int mCurrentWindow;
     private boolean playWhenReady = true;
 
+    private static final String STEP_ID = "step_id";
+
+
     public void setStepId(int mStepId) {
         this.mStepId = mStepId;
     }
@@ -73,9 +76,14 @@ public class StepFragment extends Fragment {
 
     private void restoreState(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            String STEP_ID = "step_id";
             mStepId = savedInstanceState.getInt(STEP_ID);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(STEP_ID, mStepId);
     }
 
     private void insertVideo(Step step) {

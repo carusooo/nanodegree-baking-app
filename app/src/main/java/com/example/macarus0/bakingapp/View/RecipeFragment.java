@@ -38,6 +38,12 @@ public class RecipeFragment extends Fragment {
 
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(RECIPE_ID, mRecipeId);
+    }
+
     private void restoreState(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             mRecipeId = savedInstanceState.getInt(RECIPE_ID);
