@@ -5,4 +5,6 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="empty_widget">Select a recipe to add the ingredients here as a shopping list.</string>
     <string name="add_ingredients_to_home_screen">Add ingredients to the home screen</string>
+    <string name="offline_error_message">Unable to retrieve recipes, please check your network connection.</string>
+    <string name="offline_retry_text">Retry</string>
 </resources>

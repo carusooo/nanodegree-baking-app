@@ -3,6 +3,8 @@ package com.example.macarus0.bakingapp.ViewModel;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 
 import com.example.macarus0.bakingapp.Model.Recipe;
 import com.example.macarus0.bakingapp.Model.RecipeDatabase;
@@ -13,36 +15,49 @@ import java.util.List;
 
 public class RecipeViewModel extends AndroidViewModel {
 
-    private final RecipeDatabase mDb;
+    private final Context applicationContext;
+    private RecipeDatabase mDb;
 
     public RecipeViewModel(Application application) {
         super(application);
-        mDb = RecipeDatabaseProvider.getDatabase(application.getApplicationContext());
+        applicationContext = application.getApplicationContext();
+    }
+
+    private RecipeDatabase getmDb() {
+        if(mDb == null){
+            mDb = RecipeDatabaseProvider.getDatabase(applicationContext);
+        }
+        return mDb;
     }
 
     public LiveData<List<Recipe>> getAllRecipes() {
-        return mDb.getRecipeDao().getAllRecipes();
+
+        LiveData<List<Recipe>> recipes = getmDb().getRecipeDao().getAllRecipes();
+        if( recipes.getValue() == null) {
+            mDb = null;
+        }
+        return recipes;
     }
 
     public LiveData<Recipe> getRecipeById(int id) {
-        return mDb.getRecipeDao().getRecipeById(id);
+        return getmDb().getRecipeDao().getRecipeById(id);
     }
 
     public LiveData<Step> getStepById(int id) {
-        return mDb.getStepDao().getStepById(id);
+        return getmDb().getStepDao().getStepById(id);
     }
 
 
     public LiveData<Step> getNextStep(Step step) {
-        return mDb.getStepDao().getStepByPosition(step.getRecipeId(), step.getStepNumber() + 1);
+        return getmDb().getStepDao().getStepByPosition(step.getRecipeId(), step.getStepNumber() + 1);
     }
 
     public LiveData<Step> getPreviousStep(Step step) {
-        return mDb.getStepDao().getStepByPosition(step.getRecipeId(), step.getStepNumber() - 1);
+        return getmDb().getStepDao().getStepByPosition(step.getRecipeId(), step.getStepNumber() - 1);
     }
 
     public LiveData<Step> getFirstStep(int recipeId) {
-        return mDb.getStepDao().getStepByPosition(recipeId, 1);
+        return getmDb().getStepDao().getStepByPosition(recipeId, 1);
     }
 }
 

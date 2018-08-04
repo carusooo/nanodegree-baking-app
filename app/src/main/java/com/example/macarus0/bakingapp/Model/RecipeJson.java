@@ -19,7 +19,7 @@ public class RecipeJson {
             String BAKING_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
             recipeJsonString = fetchRecipeJson(BAKING_URL);
         } catch (IOException e) {
-            Log.e("fetchRecipes", "Error fetching URL");
+            Log.e("fetchRecipes", "Error fetching URL "+ e.getMessage());
             return null;
         }
         Gson gson = new Gson();

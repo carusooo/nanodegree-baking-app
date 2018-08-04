@@ -11,7 +11,6 @@ public class RecipeDatabaseProvider {
     private static final String STEP_NUMBER_REGEX = "^\\d+\\.\\s+";
 
     public static RecipeDatabase getDatabase(Context context) {
-
         if (mDb == null) {
             mDb = createDatabase(context);
         }
@@ -23,6 +22,10 @@ public class RecipeDatabaseProvider {
                 .build();
         Thread t = new Thread(() -> {
             BaseRecipe[] recipes = RecipeJson.fetchRecipes();
+            if(recipes == null) {
+                mDb = null; // Unable to retrieve recipes
+                return;
+            };
             mDb.getBaseRecipeDao().insertAll(recipes);
             for (BaseRecipe recipe :
                     recipes) {
