@@ -27,7 +27,17 @@ public class Step {
     }
 
     String description;
+
+    public void setVideoURL(String videoURL) {
+        this.videoURL = videoURL;
+    }
+
     String videoURL;
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
+    }
+
     String thumbnailUrl;
     @Ignore
     public int getRecipeId() {

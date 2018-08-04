@@ -38,6 +38,7 @@ public class RecipeDatabaseProvider {
                     step.recipeId = recipe.getId();
                     step.setStepNumber(stepNumber++);
                     step.setDescription(cleanUpStepNumber(step.getDescription()));
+                    step.setVideoURL(cleanUpVideoUrl(step.getVideoUrl(), step.getThumbnailUrl()));
                 }
                 mDb.getIngredientDao().insertAll(recipe.getIngredients());
                 mDb.getStepDao().insertAll(recipe.getSteps());
@@ -50,6 +51,13 @@ public class RecipeDatabaseProvider {
     private static String cleanUpStepNumber(String stepText){
         String  cleanedUpString = stepText.replaceFirst(STEP_NUMBER_REGEX, "");
         return cleanedUpString;
+    }
 
+    private static String cleanUpVideoUrl(String videoUrl, String thumbnailUrl){
+        if(thumbnailUrl != null && thumbnailUrl.endsWith(".mp4") && videoUrl == null){
+            return thumbnailUrl;
+        } else {
+            return videoUrl;
+        }
     }
 }
