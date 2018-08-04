@@ -21,6 +21,11 @@ public class Step {
     int id;
     int recipeId;
     String shortDescription;
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     String description;
     String videoURL;
     String thumbnailUrl;

@@ -37,6 +37,8 @@ public class StepFragment extends Fragment {
 
     @BindView(R.id.player_view)
     PlayerView playerView;
+    @BindView(R.id.step_number_step)
+    TextView mStepNumberTextView;
     @BindView(R.id.step_text)
     TextView mStepTextTextView;
     @BindView(R.id.next_step)
@@ -77,6 +79,7 @@ public class StepFragment extends Fragment {
     }
 
     private void insertVideo(Step step) {
+        initializePlayer();
         MediaSource mediaSource = buildMediaSource(Uri.parse(step.getVideoUrl()));
         mPlayer.prepare(mediaSource, true, false);
     }
@@ -101,10 +104,15 @@ public class StepFragment extends Fragment {
 
     private void displayStep(Step step) {
         mStepTextTextView.setText(step.getDescription());
+        mStepNumberTextView.setText(Integer.toString(step.getStepNumber()));
         Log.i("displayStep", "Setting step description: " + step.getDescription());
         recipeViewModel.getNextStep(step).observe(this, nextStep -> setStepNavigationCallback(nextStep, mNextStep));
         recipeViewModel.getPreviousStep(step).observe(this, previousStep -> setStepNavigationCallback(previousStep, mPreviousStep));
-        if(step.getVideoUrl() != null) {
+        if(step.getVideoUrl().isEmpty()) {
+            playerView.setVisibility(View.GONE);
+            mStepTextTextView.setVisibility(View.VISIBLE);
+        } else {
+            Log.i("displayStep", "Loading video: " + step.getVideoUrl());
             insertVideo(step);
         }
 

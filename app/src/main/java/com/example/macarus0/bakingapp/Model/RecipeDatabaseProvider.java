@@ -3,9 +3,12 @@ package com.example.macarus0.bakingapp.Model;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import java.util.regex.Pattern;
+
 public class RecipeDatabaseProvider {
 
     private static RecipeDatabase mDb;
+    private static final String STEP_NUMBER_REGEX = "^\\d+\\.\\s+";
 
     public static RecipeDatabase getDatabase(Context context) {
 
@@ -31,6 +34,7 @@ public class RecipeDatabaseProvider {
                 for (Step step : recipe.steps) {
                     step.recipeId = recipe.getId();
                     step.setStepNumber(stepNumber++);
+                    step.setDescription(cleanUpStepNumber(step.getDescription()));
                 }
                 mDb.getIngredientDao().insertAll(recipe.getIngredients());
                 mDb.getStepDao().insertAll(recipe.getSteps());
@@ -38,5 +42,11 @@ public class RecipeDatabaseProvider {
         });
         t.start();
         return mDb;
+    }
+
+    private static String cleanUpStepNumber(String stepText){
+        String  cleanedUpString = stepText.replaceFirst(STEP_NUMBER_REGEX, "");
+        return cleanedUpString;
+
     }
 }

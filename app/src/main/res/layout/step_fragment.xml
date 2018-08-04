@@ -1,55 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/player_view"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/step_text"
 
-        app:layout_constraintStart_toStartOf="parent"
+    <FrameLayout
+        android:id="@+id/player_frame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".40"
-        />
+        app:layout_constraintBottom_toTopOf="@id/step_text"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/player_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            style="@style/StepNumber"
+            android:id="@+id/step_number_step"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"/>
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/step_text"
-        tools:text="Some step text"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_width="0dp"
-        app:layout_constraintHeight_min="200sp"
-        app:layout_constraintTop_toBottomOf="@id/player_view"
+        style="@style/Text"
         app:layout_constraintBottom_toTopOf="@id/step_navigation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-<android.support.v7.widget.LinearLayoutCompat
-        android:id="@+id/step_navigation"
-        android:layout_height="60sp"
-        android:layout_width="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-    <Button
-        android:id="@+id/previous_step"
+        app:layout_constraintHeight_min="200sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/player_frame"
+        tools:text="Some step text" />
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/step_navigation"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight=".4"
-        android:drawableTop="@drawable/ic_sharp_navigate_before_24px"
-        android:text="@string/previous_step"/>
-    <Button
-        android:id="@+id/next_step"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight=".4"
-        android:drawableTop="@drawable/ic_sharp_navigate_next_24px"
-        android:text="@string/next_step"
-        />
+        android:layout_height="60sp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/previous_step"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".4"
+            android:drawableTop="@drawable/ic_sharp_navigate_before_24px"
+            android:text="@string/previous_step" />
+
+        <Button
+            android:id="@+id/next_step"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".4"
+            android:drawableTop="@drawable/ic_sharp_navigate_next_24px"
+            android:text="@string/next_step" />
     </android.support.v7.widget.LinearLayoutCompat>
 </android.support.constraint.ConstraintLayout>
