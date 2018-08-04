@@ -23,12 +23,14 @@ public class StepActivity extends AppCompatActivity implements StepFragment.Step
         Intent intent = getIntent();
         int stepId = intent.getIntExtra(STEP_ID, 0);
 
-        StepFragment mStepFragment = new StepFragment();
-        mStepFragment.setStepId(stepId);
         FragmentManager fragmentManager = getSupportFragmentManager();
-
+        StepFragment mStepFragment = (StepFragment) fragmentManager.findFragmentById(R.id.step_container);
+        if( mStepFragment == null) {
+            mStepFragment = new StepFragment();
+        }
+        mStepFragment.setStepId(stepId);
         fragmentManager.beginTransaction()
-                .add(R.id.step_container, mStepFragment)
+                .replace(R.id.step_container, mStepFragment)
                 .commit();
 
     }

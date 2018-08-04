@@ -53,6 +53,8 @@ public class StepFragment extends Fragment {
     private boolean playWhenReady = true;
 
     private static final String STEP_ID = "step_id";
+    private static final String VIDEO_POSITION_ID = "video_position_id";
+    private static final String VIDEO_WINDOW_ID = "video_window_id";
 
 
     public void setStepId(int mStepId) {
@@ -65,18 +67,17 @@ public class StepFragment extends Fragment {
         restoreState(savedInstanceState);
         final View rootView = inflater.inflate(R.layout.step_fragment, container, false);
         ButterKnife.bind(this, rootView);
-
         recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
         Log.i("onCreateView", "Looking for step ID " + mStepId);
         recipeViewModel.getStepById(mStepId).observe(this, this::displayStep);
-
-
         return rootView;
     }
 
     private void restoreState(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             mStepId = savedInstanceState.getInt(STEP_ID);
+            mPlaybackPosition = savedInstanceState.getLong(VIDEO_POSITION_ID, 0);
+            mCurrentWindow = savedInstanceState.getInt(VIDEO_WINDOW_ID);
         }
     }
 
@@ -84,12 +85,15 @@ public class StepFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(STEP_ID, mStepId);
+        outState.putLong(VIDEO_POSITION_ID, mPlaybackPosition);
+        outState.putInt(VIDEO_WINDOW_ID, mCurrentWindow);
     }
 
     private void insertVideo(Step step) {
         initializePlayer();
         MediaSource mediaSource = buildMediaSource(Uri.parse(step.getVideoUrl()));
-        mPlayer.prepare(mediaSource, true, false);
+        Log.i("insertVideo", "Preparing Video");
+        mPlayer.prepare(mediaSource, false, false);
     }
 
     private void initializePlayer() {
@@ -98,9 +102,10 @@ public class StepFragment extends Fragment {
                     new DefaultRenderersFactory(getContext()),
                     new DefaultTrackSelector(), new DefaultLoadControl());
             playerView.setPlayer(mPlayer);
-
+            Log.i("initializePlayer", "Seeking to "+ mPlaybackPosition + " " + mCurrentWindow);
             mPlayer.setPlayWhenReady(playWhenReady);
             mPlayer.seekTo(mCurrentWindow, mPlaybackPosition);
+
         }
     }
 
@@ -147,41 +152,21 @@ public class StepFragment extends Fragment {
             mPlaybackPosition = mPlayer.getCurrentPosition();
             mCurrentWindow = mPlayer.getCurrentWindowIndex();
             playWhenReady = mPlayer.getPlayWhenReady();
+            mPlayer.stop();
             mPlayer.release();
             mPlayer = null;
         }
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if (Util.SDK_INT > 23) {
-            initializePlayer();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (Util.SDK_INT > 23) {
-            initializePlayer();
-        }
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
-        if (Util.SDK_INT > 23) {
-            releasePlayer();
-        }
-        
+        releasePlayer();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (Util.SDK_INT > 23) {
-            releasePlayer();
-        }
+        releasePlayer();
     }
 }
